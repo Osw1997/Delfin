@@ -20,19 +20,26 @@
         <title>Proyecto delfin</title>
     </head>
     <body>
-        <h1>Proyecto delf&#237;n</h1>
-        <br>
         <div id="moeas_div">
+            <h1>Proyecto delf&#237;n</h1>
+            <br>
             <h2>Selecci&#243;n de MOEAS</h2>
             <table id="tabla_moea" style="width:60%">
                 <tr>
                     <th>MOEA disponibles</th>
+                    <th>Dimensiones</th>
                 </tr>
                 <tr>
                     <th>
                         <p id="list_moea"></p>
                     </th>
-                    <script>setup();</script>
+                    <th>
+                        <!--
+                        <input type="checkbox" name="2D" id="2_dim"> 2 Dimensiones <br>
+                        <input type="checkbox" name="3D" id="3_dim"> 3 Dimensiones <br>
+                        -->
+                        <p id="list_dimension"></p>
+                    </th>
                 </tr>
                 <th colspan="2">
                     <button onclick="agregar()" id="add_btn">Avanzar</button>
@@ -43,8 +50,8 @@
             </table>
         </div>
 
-        <h2>Lista de problemas</h2>
         <div id="problems_div">
+            <h2>Lista de problemas</h2>
             <table style="width:60%">
                 <tr>
                     <th>DTLZ Problems</th>
@@ -82,6 +89,23 @@
                 </tr>
             </table>
         </div>
-        <h2>Lista de indicadores</h2>
+        
+        <div id="indicator_div">
+            <h2>Lista de indicadores</h2>    
+            <table>
+                <tr>
+                    <th>
+                        <p id="indicators_id"></p>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <button onclick="" id="finish_btn" style="visibility: hidden">Finalizar</button>
+                        <button onclick="back_problem()" id="back2prob_btn" style="visibility: hidden">Regresar</button>
+                    </th>
+                </tr>
+            </table>
+        </div>
+        <script>setup();</script>
     </body>
 </html>
