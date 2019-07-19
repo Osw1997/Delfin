@@ -217,3 +217,20 @@ function back_problem() {
         document.getElementById(indicators[n]).disabled = true;
     }
 }
+
+function ejecuta() {
+    /**
+     * Lista de indicadores que necesitan info. extra
+     *  HV                          -> {prefix_A,file_A} number_of_runs reference_point [ALGORITHM]
+     *  [GD, IGD, DELTAP, DELTAP+]  -> {prefix_A,file_A} number_of_runs p_norm reference_set_file
+     *  [IGD+, M1, IGD-NS]          -> {prefix_A,file_A} number_of_runs reference_set_file
+     *  SIGMA                       -> {prefix_A,file_A} number_of_runs {prefix,file} number_of_runs
+     *  [TAU, KAPPA]                -> *IGD, *EPS+, *R2
+     *  OBJIGD                      -> {prefix_A,file_A} number_of_runs reference_set
+     *  EPS                         -> {prefix_A,file_A} number_of_runs {prefix_B,file_B}
+     *  MAXMIN                      -> {prefix_A,file_A} number_of_runs
+     *  SPD                         -> {prefix_A,file_A} number_of_runs theta
+     *  R2                          -> {prefix_A,file_A} number_of_runs weight_filename UTILITY_FUNCTION
+     *  ONGG                        -> {prefix_A,file_A} number_of_runs
+     */
+}
