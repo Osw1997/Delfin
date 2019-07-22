@@ -1,6 +1,6 @@
 
 // MOEAS
-moeas = ["MOMBI2", "NSGA2&nbsp;&nbsp;&nbsp;", "SMS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"];
+moeas= ["MOMBI2", "NSGA2", "SMS"];
 length_moeas = moeas.length;
 // List of problems
 dtlz_p = ["DTLZ1", "DTLZ2", "DTLZ3", "DTLZ4", "DTLZ5", "DTLZ6", "DTLZ7"];
@@ -14,23 +14,26 @@ uf_p = ["UF1", "UF2", "UF3", "UF4", "UF5", "UF6", "UF7", "UF8", "UF9"];
 dims_available = ["dim_1", "dim_2", "dim_3"];
 length_dimensions = dims_available.length;
 // List of indicators
-indicators = ["HV", "NHV", "GD", "IGD", "IGD+", "DELTAP", "EPSILON*", "EPSILON+", "MAXMIN",
-              "R2", "ONGV", "C", "SP", "SPD", "S-ENERGY", "M1", "DELTAP+", "IGD-NS", "SIGMA",
+indicators = ["HV", "NHV", "GD", "IGD", "IGD+", "DELTAP", "EPS*", "EPS+", "ONVGR", "C", "MAXMIN",
+              "R2", "ONGV", "SP", "SPD", "S-ENERGY", "M1", "DELTAP+", "IGD-NS", "SIGMA",
               "TAU", "KAPPA", "OBJIGD"];
 length_indicator = indicators.length;
 
+
+var html_moeas = '';
 function setup() {
     // MOEAS' HTML
-    var html_moeas = '';
+    
+    html_moeas = "";
     for (var n = 0; n < length_moeas; n++) {
-        html_moeas += "<input type=\"checkbox\" name=\"" + moeas[n] + "\" id=\"MOEA" + n + "\">" + moeas[n] + "<br>"
+        html_moeas += "<input type=\"checkbox\" name=\"" + moeas[n] + "\" id=\"MOEA" + n + "\">" + moeas[n] + "&nbsp;&nbsp;&nbsp;&nbsp;#runs: <input type=\"number\" id=\"" + moeas[n] + "_id_nruns\" value=\"10\" min=\"0\" max=\"30\">" + "<br><br><br>"
     }
     document.getElementById("list_moea").innerHTML = html_moeas;
 
     //DIMENSIONS' HTML
     var html_dims = '';
     for (var n = 0; n < length_dimensions; n++) {
-        html_dims += "<input type=\"checkbox\" name=\"" + dims_available[n] + "\" id=\"DIM_" + (n + 1) + "\">" + (n + 1) + "Dimension(es) <br>"
+        html_dims += "<input type=\"checkbox\" name=\"" + dims_available[n] + "\" id=\"DIM_" + (n + 1) + "\">" + (n + 1) + "Dimension(es) <br><br><br>"
     }
     document.getElementById("list_dimension").innerHTML = html_dims;
 
@@ -46,9 +49,47 @@ function setup() {
     // Enable list of indicators
     var html_indicator = '';
     for (n = 0; n < length_indicator; n++) {
-        html_indicator += "<input type=\"checkbox\" name=\"" + indicators[n] + "\" id=\"" + indicators[n] + "\" disabled>" + indicators[n] + "<br>"
+        //html_indicator += "<tr><th><input type=\"checkbox\" name=\"" + indicators[n] + "\" id=\"" + indicators[n] + "\" disabled>" + indicators[n] + "</th></tr>"
+        switch (indicators[n]) {
+            case "HV":
+            case "NHV":
+                html_indicator += "<tr><th><input type=\"checkbox\" name=\"" + indicators[n] + "\" id=\"" + indicators[n] + "\" disabled>" + indicators[n] + "</th><th>Reference_point <input type=\"text\" id=\"" + indicators[n] + "ref_point_id\" disabled><br> Algorithm <input type=\"text\" id=\"" + indicators[n] + "algor_id\" disabled>  </th></tr>";
+                break;
+            case "GD":
+            case "IGD":
+            case "DELTAP":
+            case "DELTAP+":
+                html_indicator += "<tr><th><input type=\"checkbox\" name=\"" + indicators[n] + "\" id=\"" + indicators[n] + "\" disabled>" + indicators[n] + "</th><th> p_norm <input type=\"number\" id=\""+ indicators[n] +"pnorm_id\" disabled><br> Reference_file <input type=\"text\" id=\"" + indicators[n] + "refile_id\" disabled>  </th></tr>";
+                break;
+            case "IGD+":
+            case "M1":
+            case "IGD-NS":
+            case "OBJIGD":
+                html_indicator += "<tr><th><input type=\"checkbox\" name=\"" + indicators[n] + "\" id=\"" + indicators[n] + "\" disabled>" + indicators[n] + "</th><th> Reference_file <input type=\"text\" id=\"" + indicators[n] + "refile_id\" disabled>  </th></tr>";
+                break;
+            case "EPS+":
+            case "EPS*":
+            case "ONVGR":
+            case "C":
+            case "SIGMA":
+                html_indicator += "<tr><th><input type=\"checkbox\" name=\"" + indicators[n] + "\" id=\"" + indicators[n] + "\" disabled>" + indicators[n] + "</th><th> Prefix_file_B <input type=\"text\" id=\"" + indicators[n] + "prefixB_id\" disabled>  </th></tr>";
+                break;
+            case "R2":
+                html_indicator += "<tr><th><input type=\"checkbox\" name=\"" + indicators[n] + "\" id=\"" + indicators[n] + "\" disabled>" + indicators[n] + "</th><th> Weight_filename <input type=\"text\" id=\"" + indicators[n] + "w_filename_id\" disabled> <br> UTILITY_FUNCTION <input type=\"text\" id=\"" + indicators[n] + "util_func_id\" disabled>  </th></tr>";
+                break;
+            case "SPD":
+                html_indicator += "<tr><th><input type=\"checkbox\" name=\"" + indicators[n] + "\" id=\"" + indicators[n] + "\" disabled>" + indicators[n] + "</th><th> theta <input type=\"number\" id=\""+ indicators[n] +"theta_id\" disabled></th></tr>";
+                break;
+            default:
+                html_indicator += "<tr><th><input type=\"checkbox\" name=\"" + indicators[n] + "\" id=\"" + indicators[n] + "\" disabled>" + indicators[n] + "</th><th>-</th></tr>"
+                break;
+        }
     }
+    html_indicator += "<tr><th colspan=\"2\"><button onclick=\"ejecuta()\" id=\"finish_btn\" style=\"visibility: hidden\">Finalizar</button>";
+    html_indicator += "<button onclick=\"back_problem()\" id=\"back2prob_btn\" style=\"visibility: hidden\">Regresar</button>";
+    html_indicator += "</th></tr>";
     document.getElementById("indicators_id").innerHTML = html_indicator;
+    //document.getElementById("indicators2_id").innerHTML = html_indicator;
 }
 
 function agregar() {
@@ -70,9 +111,12 @@ function agregar() {
         document.getElementById("add_btn").style.visibility =  "hidden";
         // Disable checkbox list of problems
         var indx_checkbox;
+        var indx_runs_id;
         for (var n = 0; n < length_moeas; n++) {
             indx_checkbox = "MOEA" + n;
+            indx_runs_id = moeas[n] + "_id_nruns";
             document.getElementById(indx_checkbox).disabled = true;
+            document.getElementById(indx_runs_id).disabled = true;
         }
         // Disable checkbox list of dimensions
         for (var n = 0; n < length_dimensions; n++) {
@@ -93,7 +137,9 @@ function editar() {
     var indx_checkbox;
     for (var n = 0; n < length_moeas; n++) {
         indx_checkbox = "MOEA" + n;
+        indx_runs_id = moeas[n] + "_id_nruns";
         document.getElementById(indx_checkbox).disabled = false;
+        document.getElementById(indx_runs_id).disabled = false;
     }
     // Enable checkbox list of dimensions
     for (var n = 0; n < length_moeas; n++) {
@@ -124,7 +170,7 @@ function continue_problem() {
         length_p = array_problems[n].length;
         for (m = 0; m < length_p; m++) {
             indx_checkbox = array_problems_str[n].toUpperCase() + m;
-           document.getElementById(indx_checkbox).disabled = false;
+            document.getElementById(indx_checkbox).disabled = false;
         }            
     }
 }
@@ -144,8 +190,10 @@ function back_moea() {
     // Enable MOEAs
     var indx_checkbox;
     for (var n = 0; n < length_moeas; n++) {
+        indx_runs_id = moeas[n] + "_id_nruns";
         indx_checkbox = "MOEA" + n;
         document.getElementById(indx_checkbox).disabled = false;
+        document.getElementById(indx_runs_id).disabled = false;
     }
     // Enable checkbox list of dimensions
     for (var n = 0; n < length_moeas; n++) {
@@ -192,6 +240,7 @@ function load_indicators() {
         // Enable checkbox list of indicators
         for (var n = 0; n < length_indicator; n++) {
             document.getElementById(indicators[n]).disabled = false;
+            change_state_indic(indicators[n], false);
         }
     } else {
         alert("Ningun problema seleccionado");
@@ -215,6 +264,7 @@ function back_problem() {
     // Disable checkbox list of indicators
     for (var n = 0; n < length_indicator; n++) {
         document.getElementById(indicators[n]).disabled = true;
+        change_state_indic(indicators[n], true);
     }
 }
 
@@ -233,4 +283,101 @@ function ejecuta() {
      *  R2                          -> {prefix_A,file_A} number_of_runs weight_filename UTILITY_FUNCTION
      *  ONGG                        -> {prefix_A,file_A} number_of_runs
      */
+    // Check at least one indicator was selected
+    flag = false;
+    for (r = 0; r < length_indicator; r++) {
+        flag = flag || document.getElementById(indicators[r]).checked;
+    }
+    if(flag) {
+        // Variables to use
+        moeas_selected = [];
+        problems_selected = [];
+        dimensions_selected = [];
+        indicators_selected = [];
+        number_runs = [];
+        str2exec = [];
+        // Get list of MOEAs selected    
+        for (n = 0; n < length_moeas; n++) {
+            if (document.getElementById("MOEA" + n).checked)
+                moeas_selected.push(moeas[n]);
+        }
+        // Get #runs for each MOEA selected
+        for (t = 0; t < moeas_selected.length; t++) {
+            number_runs.push(parseInt(document.getElementById(moeas_selected[t] + "_id_nruns").value));
+        }
+        // Get list of dimensions selected
+        for (q = 0; q < length_dimensions; q++) {
+            if (document.getElementById("DIM_" + (q+1)).checked)
+                dimensions_selected.push(q + 1);
+        }
+        // Get list of problems selected    
+        array_problems = [dtlz_p, wfg_p, dtlz_1_p, wfg_1_p, other_p, vie_p, uf_p];
+        array_problems_str = ["DTLZ", "WFG", "DTLZ_1", "WFG_1", "OTHER", "VIE", "UF"];
+        number_problems = array_problems_str.length;
+        for (m = 0; m < number_problems; m++){
+            problems_in = array_problems[m].length;
+            for (p = 0; p < problems_in; p++){
+                if (document.getElementById(array_problems_str[m] + p).checked)
+                    problems_selected.push(array_problems_str[m] + (p + 1));
+            }
+        }
+        // Get list of indicators selected
+        for (s = 0; s < length_indicator; s++) {
+            if (document.getElementById(indicators[s]).checked)
+                indicators_selected.push(indicators[s].toLowerCase());
+        }
+        // Creating string for execution in emo_indicator.c
+        for (a = 0; a < moeas_selected.length; a++) {
+            for (b = 0; b < dimensions_selected.length; b++) {
+                for (c = 0; c < problems_selected.length; c++) {
+                    for (d = 0; d < indicators_selected.length; d++) {
+                        str2exec.push(moeas_selected[a] + "_" + problems_selected[c] + "_0" + dimensions_selected[b] + "D " + number_runs[a] + " " + indicators_selected[d]);
+                    }
+                }
+            }
+        }
+        console.log(moeas_selected, dimensions_selected, number_runs, problems_selected, indicators_selected);
+        console.log(str2exec);
+    } else {
+        alert('Ningun indicador seleccionado');
+    }
+}
+
+function change_state_indic(indicator, status) {
+    switch (indicator) {
+        case "HV":
+        case "NHV":
+            document.getElementById(indicator + "ref_point_id").disabled = status;
+            document.getElementById(indicator + "algor_id").disabled = status;
+            break;
+        case "GD":
+        case "IGD":
+        case "DELTAP":
+        case "DELTAP+":
+            document.getElementById(indicator + "pnorm_id").disabled = status; 
+            document.getElementById(indicator + "refile_id").disabled = status; 
+            break;
+        case "IGD+":
+        case "M1":
+        case "IGD-NS":
+        case "OBJIGD":
+            document.getElementById(indicator + "refile_id").disabled = status;
+            break;
+        case "EPS+":
+        case "EPS*":
+        case "ONVGR":
+        case "C":
+        case "SIGMA":
+            document.getElementById(indicator + "prefixB_id").disabled = status;
+            break;
+        case "R2":
+            document.getElementById(indicator + "w_filename_id").disabled = status;
+            document.getElementById(indicator + "util_func_id").disabled = status;
+            break;
+        case "SPD":
+            document.getElementById(indicator + "theta_id").disabled = status;
+            break;
+        default:
+            break;
+    }
 }
