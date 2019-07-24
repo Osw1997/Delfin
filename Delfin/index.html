@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+    <html lang="en">
+        <script src="Js/myscript.js">
+        </script>
+    <head>
+        <style>
+            table, th, td {
+                border: 2px solid black;
+                border-collapse: collapse;
+                margin: 0 auto;
+            }
+            th, td { 
+                padding: 10px;
+                text-align: left;    
+            }
+        </style>
+        <title>Proyecto delfin</title>
+    </head>
+    <body>
+        <div id="moeas_div">
+            <h1>Proyecto delf&#237;n</h1>
+            <br>
+            <h2>Selecci&#243;n de MOEAS</h2>
+            <table id="tabla_moea" style="width:60%">
+                <tr>
+                    <th>MOEA disponibles</th>
+                    <th>Dimensiones</th>
+                </tr>
+                <tr>
+                    <th>
+                        <p id="list_moea"></p>
+                    </th>
+                    <th>
+                        <p id="list_dimension"></p>
+                    </th>
+                </tr>
+                <th colspan="2">
+                    <button onclick="agregar()" id="add_btn">Avanzar</button>
+                    <button onclick="editar()" id="edit_btn" style="visibility: hidden">Editar</button>
+                    <button onclick="continue_problem()" id="next_btn" style="visibility: hidden">Continuar</button>
+                </th>
+            </table>
+        </div>
+
+        <div id="problems_div">
+            <h2>Lista de problemas</h2>
+            <table style="width:60%">
+                <tr>
+                    <th>DTLZ Problems</th>
+                    <th id="dtlz_id"></th>
+                </tr>
+                <tr>
+                    <th>WFG Problems</th>
+                    <th id="wfg_id"></th>
+                </tr>
+                <tr>
+                    <th>DTLZ<sup>-1</sup> Problems</th>
+                    <th id="dtlz_1_id"></th>
+                </tr>
+                <tr>
+                    <th>WFG<sup>-1</sup> Problems</th>
+                    <th id="wfg_1_id"></th>
+                </tr>
+                <tr>
+                    <th>Other Problems</th>
+                    <th id="other_id"></th>
+                </tr>
+                <tr>
+                    <th>VIE Problems</th>
+                    <th id="vie_id"></th>
+                </tr>
+                <tr>
+                    <th>UF Problems</th>
+                    <th id="uf_id"></th>
+                </tr>
+                <tr>
+                    <th colspan="2">
+                        <button onclick="load_indicators()" id="go_btn" style="visibility: hidden">Avanzar</button>
+                        <button onclick="back_moea()" id="back_btn" style="visibility: hidden">Regresar</button>
+                    </th>
+                </tr>
+            </table>
+        </div>
+        
+        <div id="indicator_div">
+            <h2>Lista de indicadores</h2>    
+            <span id="indicators_id"></span>
+            <!--<table id="indicators_id">
+            </table> -->
+        </div>
+        <script>setup();</script>
+    </body>
+</html>
+
+
+<!--
+function ejecuta() {
+    /**
+     * Lista de indicadores que necesitan info. extra
+     *  °HV                          -> {prefix_A,file_A} number_of_runs reference_point [ALGORITHM]
+     *  °[GD, IGD, DELTAP, DELTAP+]  -> {prefix_A,file_A} number_of_runs p_norm reference_set_file
+     *  °[IGD+, M1, IGD-NS]          -> {prefix_A,file_A} number_of_runs reference_set_file
+     *  °SIGMA                       -> {prefix_A,file_A} number_of_runs {prefix,file} number_of_runs
+     *  [TAU, KAPPA]                -> *IGD, *EPS+, *R2
+     *  °OBJIGD                      -> {prefix_A,file_A} number_of_runs reference_set
+     *  °EPS                         -> {prefix_A,file_A} number_of_runs {prefix_B,file_B}
+     *  °MAXMIN                      -> {prefix_A,file_A} number_of_runs
+     *  SPD                         -> {prefix_A,file_A} number_of_runs theta
+     *  °R2                          -> {prefix_A,file_A} number_of_runs weight_filename UTILITY_FUNCTION
+     *  °ONGG                        -> {prefix_A,file_A} number_of_runs
+     */
+     -->
